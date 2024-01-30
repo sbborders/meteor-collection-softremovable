@@ -1,6 +1,7 @@
 import SimpleSchema from "simpl-schema";
 const af = Package['aldeed:autoform'];
 const c2 = Package['aldeed:collection2'];
+
 SimpleSchema.extendOptions(['autoform']);
 
 const defaults = {
@@ -40,7 +41,6 @@ const behaviour = function (options) {
 
     if (removedAt) {
       def = (definition["removedAt"] = {
-        // denyInsert: true,
         optional: true,
         type: Date
       });
@@ -48,14 +48,9 @@ const behaviour = function (options) {
       if (af != null) { addAfDef(def); }
     }
 
-
-    const regEx = new RegExp(`(${SimpleSchema.RegEx.Id.source})|^${systemId}$`);
-
     if (removedBy) {
       def = (definition["removedBy"] = {
-        // denyInsert: true,
         optional: true,
-        regEx,
         type: String
       });
 
@@ -64,7 +59,6 @@ const behaviour = function (options) {
 
     if (restoredAt) {
       def = (definition["restoredAt"] = {
-        // denyInsert: true,
         optional: true,
         type: Date
       });
@@ -74,9 +68,7 @@ const behaviour = function (options) {
 
     if (restoredBy) {
       def = (definition["restoredBy"] = {
-        // denyInsert: true,
         optional: true,
-        regEx,
         type: String
       });
 
@@ -169,7 +161,7 @@ const behaviour = function (options) {
 
   const isLocalCollection = this.collection._connection === null;
 
-  this.collection.softRemove = function (selector, callback) {
+  this.collection.softRemove = async function (selector, callback) {
     let $set, ret;
     if (!selector) { return 0; }
 
@@ -180,10 +172,10 @@ const behaviour = function (options) {
 
     try {
       if (Meteor.isServer || isLocalCollection) {
-        ret = this.update(selector, modifier, { multi: true }, callback);
+        ret = await this.updateAsync(selector, modifier, { multi: true }, callback);
 
       } else {
-        ret = this.update(selector, modifier, callback);
+        ret = await this.updateAsync(selector, modifier, callback);
       }
 
     } catch (error) {
@@ -201,7 +193,7 @@ const behaviour = function (options) {
     }
   };
 
-  return this.collection.restore = function (selector, callback) {
+  return this.collection.restore = async function (selector, callback) {
     let $unset, ret;
     if (!selector) { return 0; }
 
@@ -214,10 +206,10 @@ const behaviour = function (options) {
       if (Meteor.isServer || isLocalCollection) {
         selector = _.clone(selector);
         selector["removed"] = true;
-        ret = this.update(selector, modifier, { multi: true }, callback);
+        ret = await this.updateAsync(selector, modifier, { multi: true }, callback);
 
       } else {
-        ret = this.update(selector, modifier, callback);
+        ret = await this.updateAsync(selector, modifier, callback);
       }
 
     } catch (error) {

@@ -1,5 +1,8 @@
 
-This package is a fork from https://github.com/zimme/meteor-collection-softremovable to support Autoform 6.3+ and I converted code to JavaScript. Now it supports last Meteor releases (tested up to 2.4).
+This package is a fork from [zimme/meteor-collection-softremovable](https://github.com/zimme/meteor-collection-softremovable) with these changes:
+* support Autoform 6.3+ 
+* code converted from CoffeeScript to JavaScript
+* support to new MongoDB Package Async API
 
 # Soft remove for collections
 
@@ -7,7 +10,7 @@ Add soft remove to collections.
 
 ### Install
 ```sh
-meteor add raragao:collection-softremovable
+meteor add sbborders:collection-softremovable
 ```
 
 Remember you need to remove zimme:collection-softremovable before
