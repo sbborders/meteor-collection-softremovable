@@ -2,7 +2,7 @@ Package.describe({
   git: 'https://github.com/ricaragao/meteor-collection-softremovable.git',
   name: 'sbborders:collection-softremovable',
   summary: 'Add soft remove to collections',
-  version: '2.0.0',
+  version: '2.0.1',
   documentation: 'README.md',
 });
 
