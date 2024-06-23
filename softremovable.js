@@ -172,10 +172,18 @@ const behaviour = function (options) {
 
     try {
       if (Meteor.isServer || isLocalCollection) {
-        ret = await this.updateAsync(selector, modifier, { multi: true }, callback);
+        if (this.direct) {
+          ret = await this.direct.updateAsync(selector, modifier, { multi: true }, callback);
+        } else {
+          ret = await this.updateAsync(selector, modifier, { multi: true }, callback);
+        }
 
       } else {
-        ret = await this.updateAsync(selector, modifier, callback);
+        if (this.direct) {
+          ret = await this.direct.updateAsync(selector, modifier, callback);
+        } else {
+          ret = await this.updateAsync(selector, modifier, callback);
+        }
       }
 
     } catch (error) {
@@ -206,13 +214,22 @@ const behaviour = function (options) {
       if (Meteor.isServer || isLocalCollection) {
         selector = _.clone(selector);
         selector["removed"] = true;
-        ret = await this.updateAsync(selector, modifier, { multi: true }, callback);
+        if (this.direct) {
+          ret = await this.direct.updateAsync(selector, modifier, { multi: true }, callback);
+        } else {
+          ret = await this.updateAsync(selector, modifier, { multi: true }, callback);
+        }
 
       } else {
-        ret = await this.updateAsync(selector, modifier, callback);
+        if (this.direct) {
+          ret = await this.direct.updateAsync(selector, modifier, callback);
+        } else {
+          ret = await this.updateAsync(selector, modifier, callback);
+        }
       }
 
     } catch (error) {
+      console.log(error);
       if (error.reason.indexOf('Not permitted.' !== -1)) {
         throw new Meteor.Error(403, 'Not permitted. Untrusted code may only ' +
           "restore documents by ID."
