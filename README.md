@@ -1,15 +1,27 @@
+# Soft remove for collections
 
-This package is a fork from [zimme/meteor-collection-softremovable](https://github.com/zimme/meteor-collection-softremovable) with these changes:
-* support Autoform 6.3+ 
+This package is a fork from [zimme/meteor-collection-softremovable](https://github.com/zimme/meteor-collection-softremovable) 
+
+Release Notes: 
+
+## Version 2
+
+* support Autoform 6.3+
+* suporte to Meteor 2.8
 * code converted from CoffeeScript to JavaScript
 * support to new MongoDB Package Async API
 
-# Soft remove for collections
+## Version 3
+* underscore dependency removed
+* suporte to Meteor 3+
+* code optimization
+
 
 Add soft remove to collections.
 
 ### Install
 ```sh
+meteor npm install simpl-schema
 meteor add sbborders:collection-softremovable
 ```
 
